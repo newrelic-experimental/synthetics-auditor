@@ -42,7 +42,7 @@ npm -v
 3. Execute the following command to clone this repository and run the code locally against your New Relic data:
 
 ```bash
-nr1 nerdpack:clone -r https://github.com/newrelic-experimental/synthetics-auditor.git
+git clone https://github.com/newrelic-experimental/synthetics-auditor.git
 cd synthetics-auditor
 nr1 nerdpack:serve
 ```
