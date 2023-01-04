@@ -1,0 +1,6 @@
+{
+  "schemaType": "NERDPACK",
+  "id": "0bfdee48-7564-4b5c-94a0-3d1454c10dfe",
+  "displayName": "Synthetics Auditor",
+  "description": "Find synthetics monitors that may need attention: over/under utilized, aren't sync'd with alerts, 100% fail rate, too many locations, running too often"
+}

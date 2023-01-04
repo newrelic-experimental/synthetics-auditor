@@ -1,0 +1,7 @@
+{
+  "schemaType": "LAUNCHER",
+  "id": "synthetics-auditor-launcher",
+  "displayName": "Synthetics Auditor Launcher",
+  "description": "Opens the Synthetics Auditor",
+  "rootNerdletId": "synthetics-auditor-nerdlet"
+}
