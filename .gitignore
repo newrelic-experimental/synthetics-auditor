@@ -1,0 +1,11 @@
+*.log
+*.tar.gz
+.DS_Store
+.idea
+.nos
+coverage
+dump*
+node_modules/
+yarn.lock
+tmp
+dist
