@@ -1,4 +1,4 @@
-import { ngql } from 'nr1';
+import { ngql } from "nr1";
 
 export const generateNoAlertsQuery = (accountId, cursor) => ngql`
 {
@@ -26,7 +26,6 @@ query ($guids: [EntityGuid]!) {
     entities(guids: $guids) {
       ... on SyntheticMonitorEntity {
         monitorId
-        monitorType
       }
       account {
         id

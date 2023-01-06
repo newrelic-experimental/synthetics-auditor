@@ -71,13 +71,13 @@ const NoAlerts = () => {
     const { entities, nextCursor } = response.data.actor.entitySearch.results;
 
     const matchTypes = (entity) => {
-      let isMatched = false;
+      let monitorType = ""
       entity.tags.forEach((tag) => {
         if (tag.key === "monitorType") {
-          isMatched = types.includes(tag.values[0]);
+          if (types.includes(tag.values[0])) monitorType = tag.values[0]
         }
       });
-      return isMatched;
+      return monitorType;
     };
     const filtered = await entities
       .filter(
@@ -87,9 +87,9 @@ const NoAlerts = () => {
             (tag) =>
               tag.key === "publicLocation" || tag.key === "privateLocation"
           ) &&
-          matchTypes(entity)
+          matchTypes(entity).length > 0
       )
-      .map((entity) => entity.guid);
+      .map((entity) => [entity.guid, matchTypes(entity)]);
     entityArr = entityArr.concat(filtered);
 
     if (entityArr.length >= ENTITY_MAX || nextCursor == "null") {
@@ -100,19 +100,38 @@ const NoAlerts = () => {
   };
 
   const getMons = async (accountId) => {
-    const guids = await getGuids(accountId);
+    const guids = await getGuids(accountId);  //array of guids + mon types
+    
     const results = [];
+    // reassociate the results back to the monitorType
+    const getTypeByGuid = (resultGuid) => { 
+      let monitorType = 'unknown'
+      guids.forEach((guid) => {
+        if (guid[0] == resultGuid) {
+          monitorType = guid[1]
+        } 
+    })
+    return monitorType
+  }
 
     for (let i = 0; i < guids.length; i += CHUNK_SIZE) {
       if (guids.length != 0) {
-        const chunk = guids.slice(i, i + CHUNK_SIZE);
+        const chunkedGuidsAndTypes = guids.slice(i, i + CHUNK_SIZE) 
+        const chunkGuids = chunkedGuidsAndTypes.map((chunk) => chunk[0]) // as the guids monType, need to separate that out
+
         const response = await NerdGraphQuery.query({
           query: FETCH_MONITOR_INFO_NO_ALERTS,
-          variables: { guids: chunk },
+          variables: { guids: chunkGuids}, 
         });
-        results.push(...response.data.actor.entities);
-      }
+        results.push(...response.data.actor.entities)
+      } 
     }
+
+    results.map( result => {
+      result.monitorType = getTypeByGuid(result.guid)
+      return result
+      })
+
     return results;
   };
 
@@ -218,7 +237,7 @@ const NoAlerts = () => {
                   </a>
                 </TableRowCell>
                 <TableRowCell>
-                  {item.monitorType.toLowerCase().split("_").join(" ")}
+                  {item.monitorType}
                 </TableRowCell>
                 <TableRowCell>{item.account.name}</TableRowCell>
                 <TableRowCell>
