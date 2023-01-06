@@ -14,7 +14,7 @@ export default () => {
     });
   }, []);
   return (
-    <Tabs defaultValue="tab-3">
+    <Tabs>
       <TabsItem value="tab-0" label="Usage Overview">
         <Overview />
       </TabsItem>
