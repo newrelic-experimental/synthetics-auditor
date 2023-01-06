@@ -31,7 +31,6 @@ import { CHUNK_SIZE, ENTITY_MAX } from "../common/constants";
 const NoAlerts = () => {
   const [{ accountId }] = usePlatformState();
   const [types, setTypes] = useState([
-    "Ping",
     "Simple Browser",
     "Scripted API",
     "Scripted Browser",
