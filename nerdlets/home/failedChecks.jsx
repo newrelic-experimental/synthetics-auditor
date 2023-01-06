@@ -24,7 +24,7 @@ const FailingChecksData = () => {
   const { monitors, loading } = useGuids(FAILED_CHECKS);
 
   monitors.sort(function (a, b) {   
-    return (Math.round(b.failedRate * 100) / 100) -  (Math.round(a.failedRate * 100) / 100) || b.failCount - a.failCount;
+    return b.failedRate  -  a.failedRate || b.failCount - a.failCount;
 });
 
   const renderTable = () => {
@@ -97,7 +97,7 @@ const FailingChecksData = () => {
                 <TableRowCell>{item.accountName}</TableRowCell>
                 <TableRowCell>
                   {renderWarning(item.failedRate)} {"   "}
-                  {Math.round(item.failedRate * 100) / 100}%
+                  {item.failedRate}%
                 </TableRowCell>
                 <TableRowCell>{item.failCount.toLocaleString()}</TableRowCell>
                 <TableRowCell>{item.totalChecks.toLocaleString()}</TableRowCell>

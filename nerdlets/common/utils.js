@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { NrqlQuery, usePlatformState } from 'nr1';
-import { DEV, STAGING, CROSS_ACCOUNT_CHUNK_SIZE } from '../common/constants';
-import { FAILED_CHECKS } from './nrqlQueries';
+import { useEffect, useState } from "react";
+import { NrqlQuery, usePlatformState } from "nr1";
+import { DEV, STAGING, CROSS_ACCOUNT_CHUNK_SIZE } from "../common/constants";
+import { FAILED_CHECKS } from "./nrqlQueries";
 
 const getMonitors = (query, isRaw = false, accountId) => {
   return NrqlQuery.query({
@@ -16,11 +16,11 @@ const getMonitors = (query, isRaw = false, accountId) => {
         monitorId: result.metadata.groups[2].value,
         accountName: result.metadata.groups[3].value,
         accountId: result.metadata.groups[4].value,
-        ...(result.data[0]['Total Checks'] && {
-          totalChecks: result.data[0]['Total Checks'],
+        ...(result.data[0]["Total Checks"] && {
+          totalChecks: result.data[0]["Total Checks"],
         }),
-        ...(result.data[0]['syntheticsLocationLabel'] && {
-          numLocations: result.data[0]['syntheticsLocationLabel'],
+        ...(result.data[0]["syntheticsLocationLabel"] && {
+          numLocations: result.data[0]["syntheticsLocationLabel"],
         }),
       }));
       monitors.pop();
@@ -32,7 +32,7 @@ const getMonitors = (query, isRaw = false, accountId) => {
         monitorId: result.name[1],
         accountName: result.name[2],
         accountId: result.name[3],
-        failedRate: result.results[0].result,
+        failedRate: Math.round(result.results[0].result * 100) / 100,
         failCount: result.results[1].sum,
         totalChecks: result.results[2].result,
       }));
