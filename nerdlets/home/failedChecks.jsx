@@ -23,6 +23,10 @@ import { useGuids } from "../common/utils";
 const FailingChecksData = () => {
   const { monitors, loading } = useGuids(FAILED_CHECKS);
 
+  monitors.sort(function (a, b) {   
+    return b.failedRate  -  a.failedRate || b.failCount - a.failCount;
+});
+
   const renderTable = () => {
     const renderWarning = (failureRate) => {
       if (failureRate > 0.9) {
@@ -59,7 +63,7 @@ const FailingChecksData = () => {
             <TableHeader>
               <TableHeaderCell
                 value={({ item }) => item.monitorName}
-                width="50%"
+                width="40%"
               >
                 Monitor Name
               </TableHeaderCell>
@@ -68,16 +72,16 @@ const FailingChecksData = () => {
               </TableHeaderCell>
               <TableHeaderCell
                 value={({ item }) => item.failedRate}
-                width="10%"
+                width="15%"
               >
                 Failure Rate
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.failCount} width="10%">
+              <TableHeaderCell value={({ item }) => item.failCount} width="13%">
                 Failed Check Count
               </TableHeaderCell>
               <TableHeaderCell
                 value={({ item }) => item.totalChecks}
-                width="10%"
+                width="12%"
               >
                 Total Monthly Checks
               </TableHeaderCell>
@@ -93,7 +97,7 @@ const FailingChecksData = () => {
                 <TableRowCell>{item.accountName}</TableRowCell>
                 <TableRowCell>
                   {renderWarning(item.failedRate)} {"   "}
-                  {Math.round(item.failedRate * 100) / 100}%
+                  {item.failedRate}%
                 </TableRowCell>
                 <TableRowCell>{item.failCount.toLocaleString()}</TableRowCell>
                 <TableRowCell>{item.totalChecks.toLocaleString()}</TableRowCell>
@@ -140,10 +144,10 @@ export function FailedChecks() {
       <GridItem columnSpan={8}>
         <></>
       </GridItem>
-      <GridItem columnSpan={12}>
+      <GridItem columnSpan={10}>
         <Card spacingType={[Card.SPACING_TYPE.LARGE]}>
           <CardHeader>
-            <HeadingText>Top Failing Checks</HeadingText>
+            <HeadingText>Top 50 Failing Checks</HeadingText>
             <BlockText>since 1 month ago</BlockText>
           </CardHeader>
           <CardBody>
