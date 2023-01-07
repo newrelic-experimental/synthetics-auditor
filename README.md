@@ -74,7 +74,7 @@ New Relic hosts and moderates an online forum where customers can interact with 
 
 [https://discuss.newrelic.com/t/synthetics-auditor](https://discuss.newrelic.com/t/synthetics-auditor)
 
-Please do not report issues with Account Maturity to New Relic Global Technical Support. Instead, visit the [`Explorers Hub`](https://discuss.newrelic.com/c/build-on-new-relic) for troubleshooting and best-practices.
+Please do not report issues with Synthetics Auditor to New Relic Global Technical Support. Instead, visit the [`Explorers Hub`](https://discuss.newrelic.com/c/build-on-new-relic) for troubleshooting and best-practices.
 
 ## Issues / Enhancement Requests
 
