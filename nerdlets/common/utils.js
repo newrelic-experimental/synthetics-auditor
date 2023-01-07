@@ -1,40 +1,40 @@
-import { useEffect, useState } from "react";
-import { NrqlQuery, usePlatformState } from "nr1";
-import { DEV, STAGING, CROSS_ACCOUNT_CHUNK_SIZE } from "../common/constants";
-import { FAILED_CHECKS } from "./nrqlQueries";
+import { useEffect, useState } from 'react';
+import { NrqlQuery, usePlatformState } from 'nr1';
+import { DEV, STAGING, CROSS_ACCOUNT_CHUNK_SIZE } from './constants';
+import { FAILED_CHECKS } from './nrqlQueries';
 
 const getMonitors = (query, isRaw = false, accountId) => {
   return NrqlQuery.query({
     query: query,
     accountIds: [accountId],
-    ...(isRaw && { formatType: NrqlQuery.FORMAT_TYPE.RAW }), // for failed checks
-  }).then((response) => {
+    ...(isRaw && { formatType: NrqlQuery.FORMAT_TYPE.RAW }) // for failed checks
+  }).then(response => {
     if (!isRaw) {
-      let results = response.data;
-      let monitors = results.map((result) => ({
+      const results = response.data;
+      const monitors = results.map(result => ({
         monitorName: result.metadata.groups[1].value,
         monitorId: result.metadata.groups[2].value,
         accountName: result.metadata.groups[3].value,
         accountId: result.metadata.groups[4].value,
-        ...(result.data[0]["Total Checks"] && {
-          totalChecks: result.data[0]["Total Checks"],
+        ...(result.data[0]['Total Checks'] && {
+          totalChecks: result.data[0]['Total Checks']
         }),
-        ...(result.data[0]["syntheticsLocationLabel"] && {
-          numLocations: result.data[0]["syntheticsLocationLabel"],
-        }),
+        ...(result.data[0].syntheticsLocationLabel && {
+          numLocations: result.data[0].syntheticsLocationLabel
+        })
       }));
       monitors.pop();
       return monitors;
     } else {
-      let results = response.data.facets;
-      let monitors = results.map((result) => ({
+      const results = response.data.facets;
+      const monitors = results.map(result => ({
         monitorName: result.name[0],
         monitorId: result.name[1],
         accountName: result.name[2],
         accountId: result.name[3],
         failedRate: Math.round(result.results[0].result * 100) / 100,
         failCount: result.results[1].sum,
-        totalChecks: result.results[2].result,
+        totalChecks: result.results[2].result
       }));
       monitors.pop();
       return monitors;
@@ -42,22 +42,20 @@ const getMonitors = (query, isRaw = false, accountId) => {
   });
 };
 
-export const useGuids = (query) => {
+export const useGuids = query => {
   const [{ accountId }] = usePlatformState();
   const [monitors, setMonitors] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(async () => {
     setLoading(true);
-    const mons = await getMonitors(query, query == FAILED_CHECKS, accountId);
+    const mons = await getMonitors(query, query === FAILED_CHECKS, accountId);
     const monsById = mons.reduce((m, monitor) => {
       m[monitor.monitorId] = monitor;
       return m;
     }, {});
 
-    const joinedIds = mons.map((monitor) => monitor.monitorId).join("', '");
-    const uniqueAccounts = [
-      ...new Set(mons.map((monitor) => monitor.accountId)),
-    ];
+    const joinedIds = mons.map(monitor => monitor.monitorId).join("', '");
+    const uniqueAccounts = [...new Set(mons.map(monitor => monitor.accountId))];
 
     const fetchGuids = async () => {
       const promises = [];
@@ -73,7 +71,7 @@ export const useGuids = (query) => {
             query: `SELECT uniques(entityGuid) FROM SyntheticCheck where monitorId in
               ('${joinedIds}') facet monitorId SINCE 24 hours ago limit max`,
             accountIds: chunkIds,
-            formatType: NrqlQuery.FORMAT_TYPE.RAW,
+            formatType: NrqlQuery.FORMAT_TYPE.RAW
           })
         );
         response = await Promise.all(promises);
@@ -82,7 +80,7 @@ export const useGuids = (query) => {
     };
 
     const results = await fetchGuids();
-    const facets = results.map((result) => result.data.facets);
+    const facets = results.map(result => result.data.facets);
     const guids = [].concat(...facets);
 
     for (const guid of guids) {
@@ -101,6 +99,6 @@ export const useGuids = (query) => {
   }, [query, accountId]);
   return {
     monitors,
-    loading,
+    loading
   };
 };

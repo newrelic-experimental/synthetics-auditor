@@ -13,8 +13,8 @@
     },
     "dependencies": {
         "prop-types": "15.7.2",
-        "react": "17.0.2",
-        "react-dom": "17.0.2"
+        "react": "16.6.3",
+        "react-dom": "16.6.3"
     },
     "browserslist": [
         "last 2 versions",
@@ -22,11 +22,17 @@
         "not dead"
     ],
     "devDependencies": {
-        "@babel/eslint-parser": "^7.19.1",
-        "eslint": "^8.31.0",
-        "eslint-config-prettier": "^8.6.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "eslint-plugin-react": "^7.31.11",
-        "prettier": "^2.8.1"
+        "@newrelic/eslint-plugin-newrelic": "^0.3.1",
+        "@semantic-release/changelog": "^5.0.1",
+        "@semantic-release/git": "^9.0.0",
+        "babel-eslint": "^10.0.3",
+        "babel-runtime": "^6.26.0",
+        "eslint": "^6.7.2",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "file-loader": "^5.0.2",
+        "prettier": "^1.19.1",
+        "react": "16.6.3",
+        "react-dom": "16.6.3"
     }
 }

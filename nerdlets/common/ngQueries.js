@@ -1,4 +1,4 @@
-import { ngql } from "nr1";
+import { ngql } from 'nr1';
 
 export const generateNoAlertsQuery = (accountId, cursor) => ngql`
 {
@@ -39,7 +39,7 @@ query ($guids: [EntityGuid]!) {
 }
 `;
 
-export const generateMonitorByReportingPeriodQuery = (accountId) => ngql`
+export const generateMonitorByReportingPeriodQuery = accountId => ngql`
 query ($period: String!) {
   actor {
     entitySearch(queryBuilder: {domain: SYNTH, reporting: true, type: MONITOR, tags: [{key: "period", value: $period}, {key: "accountId", value: "${accountId}"}]}) {
