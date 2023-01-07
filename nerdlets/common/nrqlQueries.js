@@ -10,7 +10,7 @@ export const CHECKS_BY_TYPE = `SELECT (sum(syntheticsFailedCheckCount) + sum(syn
 export const HIGH_CHECKS = `SELECT (sum(syntheticsFailedCheckCount) + sum(syntheticsSuccessCheckCount)) AS 'Total Checks' FROM NrDailyUsage where syntheticsTypeLabel != 'Ping' SINCE 1 month ago facet syntheticsMonitorName, syntheticsMonitorId, consumingAccountName, consumingAccountId limit 50`;
 export const HIGH_LOCATIONS = `SELECT uniqueCount(syntheticsLocationLabel) FROM NrDailyUsage WHERE syntheticsTypeLabel != 'Ping' SINCE 1 day ago FACET syntheticsMonitorName, syntheticsMonitorId, consumingAccountName, consumingAccountId LIMIT 50`;
 
-//failed checks tab - fails at 100; limiting to 50
+// failed checks tab - fails at 100; limiting to 50
 export const FAILED_CHECKS = `SELECT sum(syntheticsFailedCheckCount)/ (sum(syntheticsFailedCheckCount) + sum(syntheticsSuccessCheckCount)) * 100 AS 'Failure Rate', sum(syntheticsFailedCheckCount) AS 'Number Failed Checks', (sum(syntheticsFailedCheckCount) + sum(syntheticsSuccessCheckCount)) AS 'Total Number of Checks' FROM NrDailyUsage where syntheticsTypeLabel != 'Ping' SINCE 1 month ago facet syntheticsMonitorName, syntheticsMonitorId, consumingAccountName, consumingAccountId limit 50`;
 
 // low checks

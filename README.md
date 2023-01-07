@@ -68,22 +68,22 @@ Visit [https://one.newrelic.com](https://one.newrelic.com), and launch your app 
 
 > Important Note: Upon choosing the accounts to install this nerdpack, it's recommended to select the parent account and all subaccounts. This will allow the Synthetics Auditor app to be able to see synthetics monitors across all accounts and facet down to specific accounts in the account dropdown.
 
-# Support
-
-New Relic has open-sourced this project. This project is provided AS-IS WITHOUT WARRANTY OR DEDICATED SUPPORT. Issues and contributions should be reported to the project here on GitHub.
-
-We encourage you to bring your experiences and questions to the [Explorers Hub](https://discuss.newrelic.com) where our community members collaborate on solutions and new ideas.
-
-## Community
+## Community Support
 
 New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. Like all official New Relic open source projects, there's a related Community topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
 
-<https://discuss.newrelic.com/t/synthetics-auditor>
-*(Note: This URL is subject to change before GA)*
+[https://discuss.newrelic.com/t/synthetics-auditor](https://discuss.newrelic.com/t/synthetics-auditor)
 
-## Issues / enhancement requests
+Please do not report issues with Account Maturity to New Relic Global Technical Support. Instead, visit the [`Explorers Hub`](https://discuss.newrelic.com/c/build-on-new-relic) for troubleshooting and best-practices.
+
+## Issues / Enhancement Requests
 
 Issues and enhancement requests can be submitted in the [Issues tab of this repository](../../issues). Please search for and review the existing open issues before submitting a new issue.
+
+## Security
+
+As noted in our [security policy](https://github.com/newrelic/nr1-account-maturity/security/policy), New Relic is committed to the privacy and security of our customers and their data. We believe that providing coordinated disclosure by security researchers and engaging with the security community are important means to achieve our security goals.
+If you believe you have found a security vulnerability in this project or any of New Relic's products or websites, we welcome and greatly appreciate you reporting it to New Relic through [HackerOne](https://hackerone.com/newrelic).
 
 # Contributing
 

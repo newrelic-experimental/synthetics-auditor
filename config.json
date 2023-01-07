@@ -1,0 +1,19 @@
+{
+  "tagline": "Audit your Synthetics usage!",
+  "repository": "https://github.com/newrelic-experimental/synthetics-auditor.git",
+  "details": "Get the insights you need into your Synthetics usage to know where you can make optimizations. \n This includes: \n * high/low monitor usage \n * monitors without alerts \n * monitors with high failure rates \n * overview and audit log information",
+  "support": {
+    "issues": {
+      "url": "https://github.com/newrelic-experimental/synthetics-auditor/issues"
+    },
+    "email": {
+      "address": "opensource+synthetics-auditor@newrelic.com"
+    },
+    "community": {
+      "url": "https://discuss.newrelic.com/t/synthetics-auditor/192324"
+    }
+  },
+  "whatsNew": "Up to 50 monitors returned on the High Failure table",
+  "categoryTerms": ["synthetics"],
+  "keywords":["synthetics", "optimizations", "checks", "monitors", "Ping", "non-Ping"]
+}
