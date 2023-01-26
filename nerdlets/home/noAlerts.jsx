@@ -224,16 +224,16 @@ const NoAlerts = () => {
           
           <Table items={monitors} style={{ height: "500px" }}>
             <TableHeader>
-              <TableHeaderCell value={({ item }) => item.name}>
+              <TableHeaderCell value={({ item }) => item.name} width="50%">
                 Monitor Name (Monitor Count: {monitors.length})
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.monitorType}>
+              <TableHeaderCell value={({ item }) => item.monitorType} width="16%">
                 Monitor Type
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.account.name}>
+              <TableHeaderCell value={({ item }) => item.account.name} width="16%">
                 Consuming Account
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.totalChecks}>
+              <TableHeaderCell value={({ item }) => item.totalChecks} width="17%">
                 Monthly Checks
               </TableHeaderCell>
             </TableHeader>
