@@ -61,3 +61,13 @@ query ($period: String!) {
   }
 }
 `;
+
+export const FETCH_AUTHORIZED_ACCOUNTS = ngql`
+{
+  actor {
+    accounts(scope: GLOBAL) {
+      id
+    }
+  }
+}
+`;

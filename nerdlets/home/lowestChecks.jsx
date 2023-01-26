@@ -221,16 +221,16 @@ const LeastLocations = () => {
             <TableHeader>
               <TableHeaderCell
                 value={({ item }) => item.monitorName}
-                width="50%"
+                width="70%"
               >
                 Monitor Name
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.accountId} width="30%">
+              <TableHeaderCell value={({ item }) => item.accountId} width="18%">
                 Consuming Account Name
               </TableHeaderCell>
               <TableHeaderCell
                 value={({ item }) => item.numLocations}
-                width="20%"
+                width="12%"
               >
                 Location Count
               </TableHeaderCell>
@@ -307,7 +307,7 @@ export function LowestChecks() {
           </Card>
         </GridItem>
         {/* row 2; 2 items */}
-        <GridItem columnSpan={6}>
+        <GridItem columnSpan={8}>
           <Card spacingType={[Card.SPACING_TYPE.LARGE]}>
             <CardHeader>
               <HeadingText>Monitors with Least Locations</HeadingText>
@@ -319,7 +319,7 @@ export function LowestChecks() {
           </Card>
         </GridItem>
         {/* row 3; 1 item */}
-        <GridItem columnSpan={6}>
+        <GridItem columnSpan={4}>
           <Card spacingType={[Card.SPACING_TYPE.LARGE]}>
             <CardHeader>
               <HeadingText>Monitors by Frequency</HeadingText>

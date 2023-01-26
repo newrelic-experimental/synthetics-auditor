@@ -27,7 +27,11 @@ This project is distributed under the [Apache 2 license](LICENSE).
 
 ## What do you need to get this to work?
 
-The only thing you need is to have Synthetics monitors set up and running.
+* Node version 16
+* Git
+* NR1 CLI installed (notes below)
+* A user with permissions to update Nerdpacks
+* Synthetics monitors set up and running
 
 ## Getting Started
 
@@ -38,16 +42,22 @@ git --version
 npm -v
 ```
 
-2. Install the [NR1 CLI](https://one.newrelic.com/launcher/developer-center.launcher) by going to [the developer center](https://one.newrelic.com/launcher/developer-center.launcher), and following the instructions to install and set up your New Relic development environment. This should take about 5 minutes.
+2. Install the [NR1 CLI](https://one.newrelic.com/launcher/developer-center.launcher) by going to [the developer center](https://one.newrelic.com/launcher/developer-center.launcher), and following the instructions to install and set up your New Relic development environment. This should take about 5 minutes. Make sure you agree to the terms and conditions in this process or the Nerdpack will not build.
+
 3. Execute the following command to clone this repository and run the code locally against your New Relic data:
 
 ```bash
 git clone https://github.com/newrelic-experimental/synthetics-auditor.git
 cd synthetics-auditor
-nr1 nerdpack:serve
+npm install
+nr1 nerdpack:uuid -gf --profile=PROFILE_NAME
+nr1 nerdpack:serve --profile=PROFILE_NAME 
 ```
 
-Visit [https://one.newrelic.com/?nerdpacks=local](https://one.newrelic.com/?nerdpacks=local) to launch your app locally.
+> Note: You can find your profile names by running `nr1 profiles:list`
+
+In the terminal, select the Launcher link to get directed to the Synthetics Auditor app.
+Alternatively, visit [https://one.newrelic.com/?nerdpacks=local](https://one.newrelic.com/?nerdpacks=local) and navigate to Apps -> Synthetics Auditor.
 
 ## Deploying this Nerdpack
 

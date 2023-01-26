@@ -26,7 +26,7 @@ import {
   generateNoAlertsQuery,
   FETCH_MONITOR_INFO_NO_ALERTS,
 } from "../common/ngQueries";
-import { CHUNK_SIZE, ENTITY_MAX } from "../common/constants";
+import { CHUNK_SIZE, ENTITY_MAX, DEV, STAGING } from "../common/constants";
 
 const NoAlerts = () => {
   const [{ accountId }] = usePlatformState();
@@ -101,7 +101,7 @@ const NoAlerts = () => {
 
   const getMons = async (accountId) => {
     const guids = await getGuids(accountId);  //array of guids + mon types
-    
+
     const results = [];
     // reassociate the results back to the monitorType
     const getTypeByGuid = (resultGuid) => { 
@@ -161,6 +161,13 @@ const NoAlerts = () => {
       const monitor = monsById[facet.name];
       const totalChecks = facet.results[0].result;
       monitor.totalChecks = totalChecks;
+      if (DEV) {
+        monitor.permalink = `https://dev-one.newrelic.com/redirect/entity/${monitor.guid}`;
+      } else if (STAGING) {
+        monitor.permalink = `https://staging-one.newrelic.com/redirect/entity/${monitor.guid}`;
+      } else {
+        monitor.permalink = `https://one.newrelic.com/redirect/entity/${monitor.guid}`;
+      }
       aggCount += totalChecks;
     }
     monitors.sort((a, b) => {
@@ -212,19 +219,21 @@ const NoAlerts = () => {
         )}
 
         {/* Monitors Loaded */}
+        {console.log("loading and monitors", loading, monitors)}
         {!loading && monitors.length > 0 && (
+          
           <Table items={monitors} style={{ height: "500px" }}>
             <TableHeader>
-              <TableHeaderCell value={({ item }) => item.name}>
+              <TableHeaderCell value={({ item }) => item.name} width="50%">
                 Monitor Name (Monitor Count: {monitors.length})
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.monitorType}>
+              <TableHeaderCell value={({ item }) => item.monitorType} width="16%">
                 Monitor Type
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.account.name}>
+              <TableHeaderCell value={({ item }) => item.account.name} width="16%">
                 Consuming Account
               </TableHeaderCell>
-              <TableHeaderCell value={({ item }) => item.totalChecks}>
+              <TableHeaderCell value={({ item }) => item.totalChecks} width="17%">
                 Monthly Checks
               </TableHeaderCell>
             </TableHeader>
