@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { NrqlQuery, usePlatformState } from "nr1";
+import { NrqlQuery, NerdGraphQuery, usePlatformState } from "nr1";
 import { DEV, STAGING, CROSS_ACCOUNT_CHUNK_SIZE } from "../common/constants";
 import { FAILED_CHECKS } from "./nrqlQueries";
+import { FETCH_AUTHORIZED_ACCOUNTS } from "./ngQueries";
 
 const getMonitors = (query, isRaw = false, accountId) => {
   return NrqlQuery.query({
@@ -68,11 +69,23 @@ export const useGuids = (query) => {
         i += CROSS_ACCOUNT_CHUNK_SIZE
       ) {
         const chunkIds = uniqueAccounts.slice(i, i + CROSS_ACCOUNT_CHUNK_SIZE);
+        const getAuthorizedAccounts = async () => {
+          return NerdGraphQuery.query({
+            query: FETCH_AUTHORIZED_ACCOUNTS,
+          });
+        };
+        const accounts = await getAuthorizedAccounts();
+        const authorizedAccounts = accounts.data.actor.accounts.map(
+          (account) => `${account.id}`
+        );
+        let authorizedChunkIds = chunkIds.filter((x) =>
+          authorizedAccounts.includes(x)
+        );
         promises.push(
           NrqlQuery.query({
             query: `SELECT uniques(entityGuid) FROM SyntheticCheck where monitorId in
               ('${joinedIds}') facet monitorId SINCE 24 hours ago limit max`,
-            accountIds: chunkIds,
+            accountIds: authorizedChunkIds,
             formatType: NrqlQuery.FORMAT_TYPE.RAW,
           })
         );
@@ -82,7 +95,12 @@ export const useGuids = (query) => {
     };
 
     const results = await fetchGuids();
-    const facets = results.map((result) => result.data.facets);
+    if (results.length == 0) {
+      setMonitors([]);
+      setLoading(false);
+      return;
+    }
+    const facets = results.length > 0 ? results[0].data?.facets : null;
     const guids = [].concat(...facets);
 
     for (const guid of guids) {

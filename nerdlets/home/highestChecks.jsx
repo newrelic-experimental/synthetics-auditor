@@ -91,6 +91,7 @@ const ChecksByMonitorPeriod = () => {
   useEffect(async () => {
     setLoading(true);
     fetchMonitorsByPeriod();
+    setLoading(false)
   }, [period, accountId]);
 
   const fetchMonitorsByPeriod = () => {
