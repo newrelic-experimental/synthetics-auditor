@@ -101,15 +101,14 @@ const ChecksByMonitorPeriod = () => {
           const filteredMonitors = [];
           const unfilteredMonitors =
             response.data.actor.entitySearch.results.entities;
-
-          unfilteredMonitors.forEach((unfilteredMonitor) => {
-            if (
-              unfilteredMonitor.tags.find((element) => element == "Ping") ==
-              undefined
-            ) {
-              filteredMonitors.push(unfilteredMonitor);
-            }
-          });
+            unfilteredMonitors.forEach((unfilteredMonitor) => {
+              let flatTags = unfilteredMonitor.tags.map(({values}) => values)
+              if (
+                flatTags.find((element) => element == "Ping") == undefined
+              ) {
+                filteredMonitors.push(unfilteredMonitor);
+              }
+            });
           return filteredMonitors;
         })
         .then((data) => {

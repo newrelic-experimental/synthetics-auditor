@@ -105,9 +105,10 @@ const ChecksByMonitorPeriod = () => {
           const unfilteredMonitors =
             response.data.actor.entitySearch.results.entities;
           unfilteredMonitors.forEach((unfilteredMonitor) => {
+            let flatTags = unfilteredMonitor.tags.map(({values}) => values)
+            
             if (
-              unfilteredMonitor.tags.find((element) => element == "Ping") ==
-              undefined
+              flatTags.find((element) => element == "Ping") == undefined
             ) {
               filteredMonitors.push(unfilteredMonitor);
             }
